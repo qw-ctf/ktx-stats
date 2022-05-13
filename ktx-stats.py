@@ -7,8 +7,8 @@ import os
 with open(sys.argv[1], "rb") as fd:
     data = fd.read()
 
-offset = data.rfind(b"\x0a\x00\x00\x03\x00\x00\x00\x00")
-offset += 2
+offset = data.rfind(b"\x9f\x0a\x00\x00\x03\x00\x00\x00\x00")
+offset += 3
 
 content = b""
 
@@ -27,4 +27,5 @@ try:
     with open(name + ".json", "wb+") as fd:
         fd.write(content)
 except:
+    print(content)
     print("failed to load", sys.argv[1])
