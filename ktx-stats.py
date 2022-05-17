@@ -6,7 +6,7 @@ import os
 import gzip
 
 
-demoname = sys.argv[1].rstrip(".gz")
+demoname = os.path.basename(sys.argv[1].rstrip(".gz"))
 
 fopen = gzip.open if sys.argv[1].endswith(".gz") else open
 
