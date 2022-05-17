@@ -3,12 +3,21 @@ import struct
 import json
 import sys
 import os
+import gzip
 
-with open(sys.argv[1], "rb") as fd:
+
+demoname = sys.argv[1].rstrip(".gz")
+
+fopen = gzip.open if sys.argv[1].endswith(".gz") else open
+
+with fopen(sys.argv[1], "rb") as fd:
     data = fd.read()
 
-offset = data.rfind(b"\x9f\x0a\x00\x00\x03\x00\x00\x00\x00")
-offset += 3
+# Hacky zoom-in of correct area, json blob contains demo filename.
+offset = data.rfind(demoname.encode())
+
+offset = data[:offset].rfind(b"\x0a\x00\x00\x03\x00\x00\x00\x00")
+offset += 2
 
 content = b""
 
